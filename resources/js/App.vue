@@ -5,10 +5,11 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="col-lg-3">Name</th>
-                        <th class="col-lg-3">Age</th>
-                        <th class="col-lg-3">Record</th>
-                        <th class="col-lg-3">Style</th>
+                        <th class="col-lg-2">Name</th>
+                        <th class="col-lg-2">Age</th>
+                        <th class="col-lg-2">Record</th>
+                        <th class="col-lg-2">Style</th>
+                        <th class="col-lg-2">Button</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,6 +18,7 @@
                         <td>{{ member.age }}</td>
                         <td>{{ member.record }}</td>
                         <td>{{ member.style }}</td>
+                        <button @click="deleteMember(member.id)">Delete</button>
                     </tr>
                 </tbody>
             </table>
@@ -34,10 +36,21 @@
         },
 
         mounted() {
-             axios.get('/api/getList')
+            this.getFighter();
+        },
+        methods:{
+            deleteMember(id){
+                return axios.post('/api/delete', {id:id})
+                .then(response => { this.getFighter()
+                });
+            },
+            getFighter(){
+                return axios.get('/api/getList')
                 .then(response => {
                     this.data = response.data.members;
                 });
+            }
+            
         }
     }
 </script>

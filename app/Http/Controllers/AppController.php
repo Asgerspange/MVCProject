@@ -13,4 +13,10 @@ class AppController extends Controller
 
         return response()->json(['members' => $members]);
     }
+
+    public function Delete(Request $request) {
+        $delete = Member::where('id', $request->id)->delete();
+    }
+   
+
 }
