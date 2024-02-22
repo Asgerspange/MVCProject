@@ -12,7 +12,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="member in data" :key="member.id">
+                    <tr v-for="member in data">
                         <td>{{ member.name }}</td>
                         <td>{{ member.age }}</td>
                         <td>{{ member.record }}</td>
@@ -41,3 +41,9 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    th {
+        color: red;
+    }
+</style>
