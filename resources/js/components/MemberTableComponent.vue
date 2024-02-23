@@ -20,7 +20,8 @@
                             <td>{{ member.record }}</td>
                             <td>{{ member.style }}</td>
                             <td>
-                                <Button @click="deleteMember(member.id)" label="Delete"/>
+                                <Button @click="toggleDialog('edit', member)" label="Edit" severity="info"/>
+                                <Button @click="toggleDialog('delete', member)" label="Delete" severity="danger"/>
                             </td>
                         </tr>
                     </tbody>
@@ -28,34 +29,45 @@
             </div>
         </div>
     </div>
-    <Add />
+    <Delete :visible="showDeleteDialog" :entry="tempEntry" @close="showDeleteDialog = false"/>
 </template>
 
 <script>
     import axios from 'axios';
-    import Add from './dialogs/Add.vue';
+    import Delete from './dialogs/Delete.vue';
+    import Edit from './dialogs/Edit.vue';
     export default {
         data() {
             return {
-                data: null
+                data: null,
+                showEditDialog: false,
+                showDeleteDialog: false,
+                tempEntry: null,
             }
         },
 
         components: {
-            Add
+            Delete
         },
 
         mounted() {
             this.getFighter();
         },
         methods:{
-            deleteMember(id){
-                return axios.post('/api/delete', {id:id})
-                .then(response => { this.getFighter()
-                });
+            toggleDialog(action, entry){
+                if (action === 'edit') {
+                    this.tempEntry = Object.assign({}, entry);
+                    this.showEditDialog = true;
+                }
+
+                if (action === 'delete') {
+                    this.tempEntry = Object.assign({}, entry);
+                    this.showDeleteDialog = true;
+                }
             },
+
             getFighter(){
-                return axios.get('/api/getList')
+                return axios.get('/api/members/getMembers')
                 .then(response => {
                     this.data = response.data.members;
                 });
