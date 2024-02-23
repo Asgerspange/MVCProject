@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/getList', 'App\Http\Controllers\AppController@getMemberList');
-
-Route::post('/delete', 'App\Http\Controllers\AppController@Delete');
+Route::group(['prefix' => 'members'], function () {
+    Route::get('/getMembers', 'MemberController@getMembers');
+    Route::post('/updateMember', 'MemberController@updateMember');
+    Route::post('/deleteMember', 'MemberController@deleteMember');
+});
