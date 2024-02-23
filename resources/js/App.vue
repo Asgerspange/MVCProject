@@ -18,21 +18,29 @@
                         <td>{{ member.age }}</td>
                         <td>{{ member.record }}</td>
                         <td>{{ member.style }}</td>
-                        <button @click="deleteMember(member.id)">Delete</button>
+                        <td>
+                            <Button @click="deleteMember(member.id)" label="Delete"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <Add />
 </template>
 
 <script>
     import axios from 'axios';
+    import Add from './components/dialogs/Add.vue';
     export default {
         data() {
             return {
                 data: null
             }
+        },
+
+        components: {
+            Add
         },
 
         mounted() {
@@ -56,7 +64,4 @@
 </script>
 
 <style lang="scss" scoped>
-    th {
-        color: red;
-    }
 </style>
