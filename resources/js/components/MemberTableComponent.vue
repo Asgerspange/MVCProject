@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Button @click="addMember()" label="Add"></Button>
         <div class="card col-lg-10">
             <div class="card-header">Members</div>
             <div class="card-body">
@@ -28,7 +29,7 @@
             </div>
         </div>
     </div>
-    <Add />
+    <Add :visible="showAddDialog" @closed="showAddDialog=false" />
 </template>
 
 <script>
@@ -37,7 +38,8 @@
     export default {
         data() {
             return {
-                data: null
+                data: null,
+                showAddDialog: false
             }
         },
 
@@ -49,6 +51,10 @@
             this.getFighter();
         },
         methods:{
+            addMember() {
+                this.showAddDialog = true;
+            },
+
             deleteMember(id){
                 return axios.post('/api/delete', {id:id})
                 .then(response => { this.getFighter()
